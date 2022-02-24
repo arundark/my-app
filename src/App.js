@@ -95,7 +95,7 @@ function Movie ({movie}){
   }
 
   const paraStyles ={
-    display: show? 'block':'none',
+    display: show? 'block':'none',  
   }
 
   return(
