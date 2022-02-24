@@ -1,6 +1,7 @@
 import './App.css';
-// import {AddColor} from './ColorBox';
-import {Counter} from './Counter'
+import {AddColor} from './ColorBox';
+import {Counter} from './Counter';
+import {useState} from 'react';
 
 const movielist = [
   {
@@ -88,8 +89,13 @@ function App() {
 }
 
 function Movie ({movie}){
+  const [show, setShow] = useState(true);
   const styles = {
     color: movie.rating > 8 ? 'green' : 'red',
+  }
+
+  const paraStyles ={
+    display: show? 'block':'none',
   }
 
   return(
@@ -99,8 +105,8 @@ function Movie ({movie}){
           <h2 className='movie-name'>{movie.name}</h2>
           <p style={styles} className="movie-rating">⭐ {movie.rating}</p>
         </div>
-        <button>Toggle description</button>
-        <p className='movie-summary'>{movie.summary}</p>
+        <button onClick={() => setShow(!show)}>Toggle description</button>
+        <p style={paraStyles} className='movie-summary'>{movie.summary}</p>
         <Counter />
     </div>
     
