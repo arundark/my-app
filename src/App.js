@@ -1,5 +1,5 @@
 import './App.css';
-import {AddColor} from './ColorBox';
+// import {AddColor} from './ColorBox';
 import {Counter} from './Counter'
 
 const movielist = [
