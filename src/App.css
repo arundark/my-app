@@ -7,7 +7,7 @@
   font-size: 28px;
 }
 
-.movies-specs {
+.movie-specs {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,4 +36,11 @@
   gap: 16px;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+.add-movie-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
 }
