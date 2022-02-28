@@ -1,13 +1,11 @@
 import "./App.css";
-import { AddColor } from "./ColorBox";
-import { Counter } from "./Counter";
+import { AddColor } from "./components/ColorBox";
 import { useState } from "react";
 import { NavLink, Routes, Route } from "react-router-dom";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import { AddMovie } from "./components/AddMovie";
+import { DisplayMovie } from "./components/DisplayMovie";
+import { Home } from "./components/Home";
+import { MovieDetails } from "./components/MovieDetails";
 const INITIAL_MOVIE_LIST = [
   {
     name: "RRR",
@@ -73,115 +71,30 @@ const INITIAL_MOVIE_LIST = [
   },
 ];
 function App() {
+  const [movieList, setMovieList] = useState(INITIAL_MOVIE_LIST);
   return (
     <div className="App">
-      <div>
+      <div className="navlink">
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/movie-list">Movies List</NavLink>
+        <NavLink to="/movie">Movies List</NavLink>
+        <NavLink to="/addmovie">Add Movie</NavLink>
+        <NavLink to="/addcolor">Color Game</NavLink>
       </div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="//movie-list" element={<DisplayMovie />} />
+        <Route path="/movie" element={<DisplayMovie movieList={movieList} />} />
+        <Route
+          path="/movie/:id"
+          element={<MovieDetails movieList={movieList} />}
+        />
+        <Route
+          path="/addmovie"
+          element={
+            <AddMovie movieList={movieList} setMovieList={setMovieList} />
+          }
+        />
+        <Route path="/addcolor" element={<AddColor />} />
       </Routes>
-    </div>
-  );
-}
-
-function DisplayMovie() {
-  const [movieList, setMovieList] = useState(INITIAL_MOVIE_LIST);
-
-  const [name, setName] = useState("");
-  const [poster, setPoster] = useState("");
-  const [rating, setRating] = useState("");
-  const [summary, setSummary] = useState("");
-  return (
-    <div className="add-movie-form">
-      <TextField
-        onChange={(event) => setName(event.target.value)}
-        label="movie name"
-        variant="standard"
-      />
-      <TextField
-        onChange={(event) => setPoster(event.target.value)}
-        label="poster url"
-        variant="standard"
-      />
-      <TextField
-        onChange={(event) => setRating(event.target.value)}
-        label="summratingary"
-        variant="standard"
-      />
-      <TextField
-        onChange={(event) => setSummary(event.target.value)}
-        label="summary"
-        variant="standard"
-      />
-      <Button
-        onClick={() => {
-          const newMovie = {
-            name: name,
-            poster: poster,
-            rating: rating,
-            summary: summary,
-          };
-          setMovieList([...movieList, newMovie]);
-        }}
-        variant="contained"
-      >
-        Add movie
-      </Button>
-      <div className="movie-list">
-        {movieList.map((mv) => (
-          <Movie movie={mv} />
-        ))}
-        {/* <AddColor /> */}
-      </div>
-    </div>
-  );
-}
-
-function Home() {
-  return (
-    <div>
-      <h1>Welcome to Home</h1>
-    </div>
-  );
-}
-
-function Movie({ movie }) {
-  const [show, setShow] = useState(true);
-  const styles = {
-    color: movie.rating > 8 ? "green" : "red",
-  };
-
-  const paraStyles = {
-    display: show ? "block" : "none",
-  };
-
-  return (
-    <div className="movie-container">
-      <img src={movie.poster} alt={movie.name} className="movie-poster" />
-      <div className="movie-specs">
-        <h2 className="movie-name">
-          {movie.name}
-          <IconButton
-            aria-label="Toggle description"
-            onClick={() => setShow(!show)}
-            className="bt-sz-lg"
-            color="primary"
-          >
-            {show ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </IconButton>
-        </h2>
-        <p style={styles} className="movie-rating">
-          ⭐ {movie.rating}
-        </p>
-        {/* <button onClick={() => setShow(!show)}>Toggle description</button> */}
-      </div>
-      <p style={paraStyles} className="movie-summary">
-        {movie.summary}
-      </p>
-      <Counter />
     </div>
   );
 }

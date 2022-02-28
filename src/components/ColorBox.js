@@ -2,12 +2,11 @@ import { useState } from "react";
 
 export function AddColor() {
   const [color, setColor] = useState("orange");
+  const [colorList, setColorList] = useState(["orange", "green", "red"]);
   const styles = {
     fontSize: "24px",
     background: color,
   };
-
-  const [colorList, setColorList] = useState(["orange", "crismon", "red"]);
 
   return (
     <div>
@@ -25,8 +24,8 @@ export function AddColor() {
         </button>
       </div>
       {colorList.join()}
-      {colorList.map((clr) => (
-        <ColorBox color={clr} />
+      {colorList.map((clr, index) => (
+        <ColorBox key={index} color={clr} />
       ))}
     </div>
   );
@@ -39,4 +38,5 @@ function ColorBox({ color }) {
     width: "300px",
     marginTop: "10px",
   };
+  return <div style={styles}></div>;
 }

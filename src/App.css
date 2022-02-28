@@ -44,3 +44,9 @@
   gap: 10px;
   margin-bottom: 16px;
 }
+
+.navlink {
+  display: flex;
+  gap: 10px;
+  list-style-type: none;
+}
