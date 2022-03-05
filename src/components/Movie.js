@@ -1,12 +1,14 @@
 import { Counter } from "./Counter";
 import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
 
-export function Movie({ movie, id }) {
+export function Movie({ movie, id, movieList, setMovieList }) {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
   const styles = {
@@ -48,7 +50,30 @@ export function Movie({ movie, id }) {
       <p style={paraStyles} className="movie-summary">
         {movie.summary}
       </p>
-      <Counter />
+      <div className="movie-operation">
+        <Counter />
+        <div>
+          <IconButton
+            color="error"
+            aria-label="delete"
+            onClick={() => {
+              movieList.splice(id, 1);
+              setMovieList([...movieList]);
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+          <IconButton
+            color="secondary"
+            aria-label="delete"
+            onClick={() => {
+              navigate(`/movie/edit/${id}`);
+            }}
+          >
+            <EditIcon />
+          </IconButton>
+        </div>
+      </div>
     </div>
   );
 }

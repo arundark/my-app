@@ -43,10 +43,25 @@
   flex-direction: column;
   gap: 10px;
   margin-bottom: 16px;
+  margin-top: 16px;
 }
 
 .navlink {
   display: flex;
   gap: 10px;
   list-style-type: none;
+}
+
+.movie-details-container {
+  max-width: 800px;
+}
+
+.notfound {
+  width: 50%;
+  object-fit: cover;
+}
+
+.movie-operation {
+  display: flex;
+  justify-content: space-between;
 }
