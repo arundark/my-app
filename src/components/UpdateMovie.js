@@ -53,8 +53,9 @@ export function UpdateMovie({ movieList, setMovieList }) {
             summary: summary,
             trailer: trailer,
           };
-          movieList[id] = updateMovie;
-          setMovieList([...movieList]);
+          const updatedMovie = [...movieList];
+          updatedMovie[id] = updateMovie;
+          setMovieList([...updatedMovie]);
           navigate("/movie");
         }}
         variant="contained"

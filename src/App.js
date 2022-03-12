@@ -2,13 +2,28 @@ import "./App.css";
 import { AddColor } from "./components/ColorBox";
 import { useState } from "react";
 
-import { NavLink, Routes, Route, Navigate } from "react-router-dom";
+import {
+  NavLink,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import { AddMovie } from "./components/AddMovie";
 import { DisplayMovie } from "./components/DisplayMovie";
 import { Home } from "./components/Home";
 import { MovieDetails } from "./components/MovieDetails";
 import { NotFound } from "./components/NotFound";
 import { UpdateMovie } from "./components/UpdateMovie";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import * as React from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import Paper from "@mui/material/Paper";
 const INITIAL_MOVIE_LIST = [
   {
     name: "RRR",
@@ -81,49 +96,100 @@ const INITIAL_MOVIE_LIST = [
     trailer: "https://www.youtube.com/embed/NgsQ8mVkN8w",
   },
 ];
+
 function App() {
-  const [movieList, setMovieList] = useState(INITIAL_MOVIE_LIST);
+  fetch("https://62245f973af069a0f9b45751.mockapi.io/movies")
+    .then((response) => response.json())
+    .then((data) => setMovieList(data));
+  const [movieList, setMovieList] = useState([]);
+  const navigate = useNavigate();
+  const [mode, setTheme] = useState("light");
+  const screenMode = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
   return (
-    <div className="App">
-      <div className="navlink">
+    <ThemeProvider theme={screenMode}>
+      <Paper style={{ minHeight: "100vh" }} elevation={3} square>
+        <div className="App">
+          {/* <div className="navlink">
         <NavLink to="/">Home</NavLink>
         <NavLink to="/movie">Movies List</NavLink>
         <NavLink to="/movie/add">Add Movie</NavLink>
         <NavLink to="/addcolor">Color Game</NavLink>
-      </div>
+      </div> */}
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/movie"
-          element={
-            <DisplayMovie movieList={movieList} setMovieList={setMovieList} />
-          }
-        />
-        <Route path="/films" element={<Navigate replace to="/movie" />} />
+          <AppBar position="static">
+            <Toolbar>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Button onClick={() => navigate("/")} color="inherit">
+                  Home
+                </Button>
+                <Button onClick={() => navigate("/movie")} color="inherit">
+                  Movies List
+                </Button>
+                <Button onClick={() => navigate("/movie/add")} color="inherit">
+                  Add Movie
+                </Button>
+                <Button onClick={() => navigate("/addcolor")} color="inherit">
+                  Color Game
+                </Button>
+              </Typography>
+              <Button
+                startIcon={
+                  mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />
+                }
+                onClick={() => {
+                  setTheme(mode === "light" ? "dark" : "light");
+                }}
+                color="inherit"
+              >
+                {mode} MODE
+              </Button>
+            </Toolbar>
+          </AppBar>
 
-        <Route
-          path="/movie/:id"
-          element={<MovieDetails movieList={movieList} />}
-        />
-        <Route
-          path="/movie/add"
-          element={
-            <AddMovie movieList={movieList} setMovieList={setMovieList} />
-          }
-        />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/movie"
+              element={
+                <DisplayMovie
+                  movieList={movieList}
+                  setMovieList={setMovieList}
+                />
+              }
+            />
+            <Route path="/films" element={<Navigate replace to="/movie" />} />
 
-        <Route
-          path="/movie/edit/:id"
-          element={
-            <UpdateMovie movieList={movieList} setMovieList={setMovieList} />
-          }
-        />
-        <Route path="/addcolor" element={<AddColor />} />
-        <Route path="/404" element={<NotFound />} />
-        <Route path="*" element={<Navigate replace to="/404" />} />
-      </Routes>
-    </div>
+            <Route
+              path="/movie/:id"
+              element={<MovieDetails movieList={movieList} />}
+            />
+            <Route
+              path="/movie/add"
+              element={
+                <AddMovie movieList={movieList} setMovieList={setMovieList} />
+              }
+            />
+
+            <Route
+              path="/movie/edit/:id"
+              element={
+                <UpdateMovie
+                  movieList={movieList}
+                  setMovieList={setMovieList}
+                />
+              }
+            />
+            <Route path="/addcolor" element={<AddColor />} />
+            <Route path="/404" element={<NotFound />} />
+            <Route path="*" element={<Navigate replace to="/404" />} />
+          </Routes>
+        </div>
+      </Paper>
+    </ThemeProvider>
   );
 }
 

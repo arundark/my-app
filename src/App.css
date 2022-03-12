@@ -1,6 +1,7 @@
 /* .App {
-  text-align: center;
+   text-align: center;
   font-family: sans-serif;
+  margin-bottom: 16px;
 } */
 
 .btn-sz-lg {
@@ -15,6 +16,7 @@
 
 .movie-container {
   width: 340px;
+  margin-top: 16px;
 }
 
 .movie-poster {
@@ -40,10 +42,10 @@
 
 .add-movie-form {
   display: flex;
+  /* align-items: center; */
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 16px;
-  margin-top: 16px;
+  margin: 16px;
 }
 
 .navlink {
@@ -64,4 +66,8 @@
 .movie-operation {
   display: flex;
   justify-content: space-between;
+}
+
+.add-color {
+  margin-top: 16px;
 }
