@@ -1,6 +1,6 @@
 import "./App.css";
 import { AddColor } from "./components/ColorBox";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
   NavLink,
@@ -98,9 +98,6 @@ const INITIAL_MOVIE_LIST = [
 ];
 
 function App() {
-  fetch("https://62245f973af069a0f9b45751.mockapi.io/movies")
-    .then((response) => response.json())
-    .then((data) => setMovieList(data));
   const [movieList, setMovieList] = useState([]);
   const navigate = useNavigate();
   const [mode, setTheme] = useState("light");
@@ -109,6 +106,7 @@ function App() {
       mode: mode,
     },
   });
+
   return (
     <ThemeProvider theme={screenMode}>
       <Paper style={{ minHeight: "100vh" }} elevation={3} square>
@@ -163,10 +161,7 @@ function App() {
             />
             <Route path="/films" element={<Navigate replace to="/movie" />} />
 
-            <Route
-              path="/movie/:id"
-              element={<MovieDetails movieList={movieList} />}
-            />
+            <Route path="/movie/:id" element={<MovieDetails />} />
             <Route
               path="/movie/add"
               element={
