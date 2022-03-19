@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useNavigate, useParams } from "react-router-dom";
+import { API } from "../global";
 
-export function UpdateMovie({ movieList, setMovieList }) {
+export function UpdateMovie() {
   const { id } = useParams();
-  const movie = movieList[id];
+  // const movie = movieList[id];
+  const [movie, setMovie] = useState(null);
+  useEffect(() => {
+    fetch(`${API}/movies/${id}`)
+      .then((response) => response.json())
+      .then((data) => setMovie(data));
+  }, []);
+
+  return movie ? <EditMovie movie={movie} /> : "Loading...";
+}
+
+function EditMovie({ movie }) {
   const [name, setName] = useState(movie.name);
   const [poster, setPoster] = useState(movie.poster);
   const [rating, setRating] = useState(movie.rating);
@@ -53,10 +65,11 @@ export function UpdateMovie({ movieList, setMovieList }) {
             summary: summary,
             trailer: trailer,
           };
-          const updatedMovie = [...movieList];
-          updatedMovie[id] = updateMovie;
-          setMovieList([...updatedMovie]);
-          navigate("/movie");
+          fetch(`${API}/movies/${movie.id}`, {
+            method: "PUT",
+            body: JSON.stringify(updateMovie),
+            headers: { "content-type": "application/json" },
+          }).then(() => navigate("/movie"));
         }}
         variant="contained"
       >

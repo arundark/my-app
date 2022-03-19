@@ -150,34 +150,13 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route
-              path="/movie"
-              element={
-                <DisplayMovie
-                  movieList={movieList}
-                  setMovieList={setMovieList}
-                />
-              }
-            />
+            <Route path="/movie" element={<DisplayMovie />} />
             <Route path="/films" element={<Navigate replace to="/movie" />} />
 
             <Route path="/movie/:id" element={<MovieDetails />} />
-            <Route
-              path="/movie/add"
-              element={
-                <AddMovie movieList={movieList} setMovieList={setMovieList} />
-              }
-            />
+            <Route path="/movie/add" element={<AddMovie />} />
 
-            <Route
-              path="/movie/edit/:id"
-              element={
-                <UpdateMovie
-                  movieList={movieList}
-                  setMovieList={setMovieList}
-                />
-              }
-            />
+            <Route path="/movie/edit/:id" element={<UpdateMovie />} />
             <Route path="/addcolor" element={<AddColor />} />
             <Route path="/404" element={<NotFound />} />
             <Route path="*" element={<Navigate replace to="/404" />} />

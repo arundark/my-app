@@ -9,11 +9,12 @@ import { API } from "../global";
 export function DisplayMovie() {
   const navigate = useNavigate();
   const [movieList, setMovieList] = useState([]);
-  useEffect(() => {
+  const getData = () => {
     fetch(`${API}/movies`)
       .then((response) => response.json())
       .then((data) => setMovieList(data));
-  }, []);
+  };
+  useEffect(() => getData(), []);
   return (
     <div className="movie-list">
       {movieList.map((mv, index) => (
@@ -28,9 +29,9 @@ export function DisplayMovie() {
               color="error"
               aria-label="delete movie"
               onClick={() => {
-                const updatedMovieList = [...movieList];
-                updatedMovieList.splice(index, 1);
-                setMovieList([...updatedMovieList]);
+                fetch(`${API}/movies/${mv.id}`, { method: "DELETE" }).then(() =>
+                  getData()
+                );
               }}
             >
               <DeleteIcon />
@@ -41,7 +42,7 @@ export function DisplayMovie() {
               color="secondary"
               aria-label="edit movie"
               onClick={() => {
-                navigate(`/movie/edit/${index}`);
+                navigate(`/movie/edit/${mv.id}`);
               }}
             >
               <EditIcon />
