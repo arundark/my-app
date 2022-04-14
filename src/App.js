@@ -24,6 +24,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Paper from "@mui/material/Paper";
+import { BasicForm } from "./components/BasicForm";
 const INITIAL_MOVIE_LIST = [
   {
     name: "RRR",
@@ -152,12 +153,11 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/movie" element={<DisplayMovie />} />
             <Route path="/films" element={<Navigate replace to="/movie" />} />
-
             <Route path="/movie/:id" element={<MovieDetails />} />
             <Route path="/movie/add" element={<AddMovie />} />
-
             <Route path="/movie/edit/:id" element={<UpdateMovie />} />
             <Route path="/addcolor" element={<AddColor />} />
+            <Route path="/form" element={<BasicForm />} />
             <Route path="/404" element={<NotFound />} />
             <Route path="*" element={<Navigate replace to="/404" />} />
           </Routes>
