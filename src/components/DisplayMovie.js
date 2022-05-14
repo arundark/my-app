@@ -19,9 +19,9 @@ export function DisplayMovie() {
     <div className="movie-list">
       {movieList.map((mv, index) => (
         <Movie
-          key={mv.id}
+          key={mv._id}
           movie={mv}
-          id={mv.id}
+          id={mv._id}
           // movieList={movieList}
           // setMovieList={setMovieList}
           deletButton={
@@ -29,8 +29,8 @@ export function DisplayMovie() {
               color="error"
               aria-label="delete movie"
               onClick={() => {
-                fetch(`${API}/movies/${mv.id}`, { method: "DELETE" }).then(() =>
-                  getData()
+                fetch(`${API}/movies/${mv._id}`, { method: "DELETE" }).then(
+                  () => getData()
                 );
               }}
             >
@@ -42,7 +42,7 @@ export function DisplayMovie() {
               color="secondary"
               aria-label="edit movie"
               onClick={() => {
-                navigate(`/movie/edit/${mv.id}`);
+                navigate(`/movie/edit/${mv._id}`);
               }}
             >
               <EditIcon />
